@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#6A6AAA"/>
+  <meta name="description" content="This is a Simple Tic Tac Toe Game">
+  <title>Tic Tac Toe Game</title>
+  <link rel="manifest" href="app.webmanifest">
+
+  <link rel="stylesheet" href="./style.css">
+  <script src="./app.js" type="module"></script>
+</head>
+<body>
+  <h1>Tic Tac Toe</h1>
+  <div class="gameboard" id="board"></div>
+  <p id="info"></p>
+  <script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
+  <script>
+      ;(async () => {
+            // does the browser support service workers?
+            if ('serviceWorker' in navigator) {
+                // then register our service worker
+              try {
+                const reg = await  navigator.serviceWorker.register('./sw.js', { scope: '/' });
+                // display a success message
+                console.log(`Service Worker is Registered:`, reg);
+              } catch(error) {
+                // display an error message
+                console.log(`Service Worker Error (${error})`);
+              };
+
+              // ready is a Promise that never rejects and resolved when the service worker is active. 
+              const active = await navigator.serviceWorker.ready;
+              // we have an active service worker working for us
+              console.log(`Service Worker is Active:`, active);
+              // At this point, you can call methods that require an active service worker,
+              // like registration.pushManager.subscribe() for push notification
+            } else {
+              // happens when the app isn't served over a TLS connection (HTTPS)
+              console.warn('Service Worker not available');
+            }
+        })();//async IIFE
+  
+</script>
+</body>
+</html>
